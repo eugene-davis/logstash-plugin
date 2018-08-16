@@ -24,6 +24,8 @@
 
 package jenkins.plugins.logstash.persistence;
 
+import jenkins.plugins.logstash.persistence.builddata.AbstractBuildData;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
@@ -78,5 +80,5 @@ public interface LogstashIndexerDao {
    *          The log data to transmit, not null
    * @return The formatted JSON object, never null
    */
-  public JSONObject buildPayload(BuildData buildData, String jenkinsUrl, List<String> logLines);
+  public JSONObject buildPayload(AbstractBuildData buildData, String jenkinsUrl, List<String> logLines);
 }

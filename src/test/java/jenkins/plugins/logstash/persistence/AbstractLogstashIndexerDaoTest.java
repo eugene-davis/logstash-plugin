@@ -1,5 +1,7 @@
 package jenkins.plugins.logstash.persistence;
 
+import jenkins.plugins.logstash.persistence.builddata.AbstractBuildData;
+
 import static net.sf.json.test.JSONAssert.assertEquals;
 import static org.powermock.api.mockito.PowerMockito.when;
 
@@ -28,7 +30,7 @@ public class AbstractLogstashIndexerDaoTest {
   static final String ONE_LINE_STRING = "{\"@buildTimestamp\":\"2000-01-01\",\"data\":{},\"message\":[\"LINE 1\"],\"source\":\"jenkins\",\"source_host\":\"http://localhost:8080/jenkins\",\"@version\":1}";
   static final String TWO_LINE_STRING = "{\"@buildTimestamp\":\"2000-01-01\",\"data\":{},\"message\":[\"LINE 1\", \"LINE 2\"],\"source\":\"jenkins\",\"source_host\":\"http://localhost:8080/jenkins\",\"@version\":1}";
 
-  @Mock BuildData mockBuildData;
+  @Mock AbstractBuildData mockBuildData;
   @Mock LogstashConfiguration logstashConfiguration;
 
   @Before

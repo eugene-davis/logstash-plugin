@@ -29,7 +29,11 @@ import hudson.model.AbstractBuild;
 import hudson.model.TaskListener;
 import hudson.model.Run;
 import jenkins.model.Jenkins;
-import jenkins.plugins.logstash.persistence.BuildData;
+
+import jenkins.plugins.logstash.persistence.builddata.AbstractBuildData;
+import jenkins.plugins.logstash.persistence.builddata.FreestyleBuildData;
+import jenkins.plugins.logstash.persistence.builddata.PipelineBuildData;
+
 import jenkins.plugins.logstash.persistence.LogstashIndexerDao;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
@@ -56,7 +60,7 @@ public class LogstashWriter {
   private final OutputStream errorStream;
   private final Run<?, ?> build;
   private final TaskListener listener;
-  private final BuildData buildData;
+  private final AbstractBuildData buildData;
   private final String jenkinsUrl;
   private final LogstashIndexerDao dao;
   private boolean connectionBroken;
@@ -149,11 +153,11 @@ public class LogstashWriter {
     return LogstashConfiguration.getInstance().getIndexerInstance();
   }
 
-  BuildData getBuildData() {
+  AbstractBuildData getBuildData() {
     if (build instanceof AbstractBuild) {
-      return new BuildData((AbstractBuild<?, ?>) build, new Date(), listener);
+      return new FreestyleBuildData((AbstractBuild<?, ?>) build, new Date(), listener);
     } else {
-      return new BuildData(build, new Date(), listener);
+      return new PipelineBuildData(build, new Date(), listener);
     }
   }
 

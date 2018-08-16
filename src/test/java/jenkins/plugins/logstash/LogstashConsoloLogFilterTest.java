@@ -13,7 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import jenkins.plugins.logstash.persistence.BuildData;
+import jenkins.plugins.logstash.persistence.builddata.AbstractBuildData;
 
 import org.junit.After;
 import org.junit.Before;
@@ -59,7 +59,7 @@ public class LogstashConsoloLogFilterTest {
 
   @Mock AbstractBuild mockBuild;
   @Mock Project<?, ?> mockProject;
-  @Mock BuildData mockBuildData;
+  @Mock AbstractBuildData mockBuildData;
   @Mock LogstashWriter mockWriter;
 
   @Before

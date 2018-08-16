@@ -22,6 +22,8 @@
 
 package jenkins.plugins.logstash.persistence;
 
+import jenkins.plugins.logstash.persistence.builddata.AbstractBuildData;
+
 import java.nio.charset.Charset;
 import java.util.Calendar;
 import java.util.List;
@@ -49,7 +51,7 @@ public abstract class HostBasedLogstashIndexerDao extends AbstractLogstashIndexe
   }
 
   @Override
-  public JSONObject buildPayload(BuildData buildData, String jenkinsUrl, List<String> logLines) {
+  public JSONObject buildPayload(AbstractBuildData buildData, String jenkinsUrl, List<String> logLines) {
     JSONObject payload = new JSONObject();
     payload.put("data", buildData.toJson());
     payload.put("message", logLines);

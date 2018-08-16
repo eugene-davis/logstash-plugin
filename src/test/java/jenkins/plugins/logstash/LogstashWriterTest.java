@@ -44,7 +44,7 @@ import hudson.model.Project;
 import hudson.model.Result;
 import hudson.model.TaskListener;
 import hudson.tasks.test.AbstractTestResultAction;
-import jenkins.plugins.logstash.persistence.BuildData;
+import jenkins.plugins.logstash.persistence.builddata.AbstractBuildData;
 import jenkins.plugins.logstash.persistence.LogstashIndexerDao;
 import net.sf.json.JSONObject;
 
@@ -57,7 +57,7 @@ public class LogstashWriterTest {
                                              OutputStream error,
                                              final String url,
                                              final LogstashIndexerDao indexer,
-                                             final BuildData data) {
+                                             final AbstractBuildData data) {
     return new LogstashWriter(testBuild, error, null, testBuild.getCharset()) {
       @Override
       LogstashIndexerDao getIndexerDao() {
@@ -65,7 +65,7 @@ public class LogstashWriterTest {
       }
 
       @Override
-      BuildData getBuildData() {
+      AbstractBuildData getBuildData() {
         assertNotNull("BuildData should never be requested for missing dao.", this.getDao());
 
         // For testing, providing null data means use the actual method
@@ -92,7 +92,7 @@ public class LogstashWriterTest {
   @Mock LogstashConfiguration logstashConfiguration;
 
 
-  @Mock BuildData mockBuildData;
+  @Mock AbstractBuildData mockBuildData;
   @Mock TaskListener mockListener;
   @Mock Computer mockComputer;
   @Mock Executor mockExecutor;
@@ -133,7 +133,7 @@ public class LogstashWriterTest {
     when(mockProject.getName()).thenReturn("LogstashWriterTest");
     when(mockProject.getFullName()).thenReturn("parent/LogstashWriterTest");
 
-    when(mockDao.buildPayload(any(BuildData.class), anyString(), anyListOf(String.class)))
+    when(mockDao.buildPayload(any(AbstractBuildData.class), anyString(), anyListOf(String.class)))
       .thenReturn(JSONObject.fromObject("{\"data\":{},\"message\":[\"test\"],\"source\":\"jenkins\",\"source_host\":\"http://my-jenkins-url\",\"@version\":1}"));
 
     Mockito.doNothing().when(mockDao).push(anyString());
